@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scary Story Text Game</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #181818;
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            width: 300px;
+            background-color: #222;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+        }
+        .message {
+            margin: 15px 0;
+            font-size: 18px;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #444;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #666;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Scary Text Story</h1>
+        <div id="messages"></div>
+        <button class="button" onclick="nextMessage()">Next</button>
+    </div>
+
+    <script>
+        // Scary story segments (you can expand this array with more)
+        const stories = [
+            ["Mom says: Don't go outside.", "You: Why?", "Mom says: Lock the doors. NOW."],
+            ["You receive a text: 'I can see you.'", "You look around, no one is there.", "Then another text: 'I’m in your house.'"],
+            ["Your phone rings at 3:00 AM.", "You answer, and hear heavy breathing.", "A whisper says: 'I’m right behind you.'"],
+            ["You hear footsteps upstairs.", "But you live alone.", "Then you get a text: 'I’m in your closet.'"],
+            ["A knock at the door.", "You open it to find no one.", "But you get a message: 'I’m waiting inside your house.'"],
+            ["Mom texts: 'Get in the car, NOW.'", "You reply: 'Why?'","She replies: 'There’s someone in the house with you.'"]
+        ];
+
+        let currentMessageIndex = 0;
+        let currentStoryIndex = 0;
+
+        function nextMessage() {
+            // Display the current message in the array
+            const messageContainer = document.getElementById("messages");
+            const currentStory = stories[currentStoryIndex];
+
+            if (currentMessageIndex < currentStory.length) {
+                const message = document.createElement("p");
+                message.classList.add("message");
+                message.innerText = currentStory[currentMessageIndex];
+                messageContainer.appendChild(message);
+                currentMessageIndex++;
+            } else {
+                // Move to the next story after the current one finishes
+                currentStoryIndex = (currentStoryIndex + 1) % stories.length;
+                currentMessageIndex = 0;
+                const nextButton = document.querySelector(".button");
+                nextButton.innerText = "Next Story";
+            }
+        }
+
+        // Start the first message
+        nextMessage();
+    </script>
+
+</body>
+</html>
